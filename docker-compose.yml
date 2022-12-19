@@ -1,0 +1,44 @@
+version: '2'
+
+volumes:
+  nextcloud:
+  db:
+
+secrets:
+  pass_mysql_root:
+    file: ./pass_mysql_root.txt
+  pass_mysql:
+    file: ./pass_mysql.txt
+    
+services:
+  db:
+    image: mariadb:10.5
+    restart: always
+    command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
+    volumes:
+      - db:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=/run/secrets/pass_mysql_root
+      - MYSQL_PASSWORD=/run/secrets/pass_mysql
+      - MYSQL_DATABASE=nextcloud
+      - MYSQL_USER=user_ek
+    secrets:
+      - pass_mysql_root
+      - pass_mysql
+
+  app:
+    image: nextcloud
+    restart: always
+    ports:
+      - 8080:80
+    links:
+      - db
+    volumes:
+      - nextcloud:/var/www/html
+    environment:
+      - MYSQL_PASSWORD=/run/secrets/pass_mysql
+      - MYSQL_DATABASE=nextcloud
+      - MYSQL_USER=user_ek
+      - MYSQL_HOST=db
+    secrets:
+      - pass_mysql
