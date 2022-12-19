@@ -1,0 +1,7 @@
+untrusted domain
+https://docs.nextcloud.com/server/15/admin_manual/installation/installation_wizard.html#trusted-domains
+
+got to config/config.php
+
+under teh ip settings, add 192.x.x.x 
+

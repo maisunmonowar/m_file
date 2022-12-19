@@ -9,7 +9,7 @@ secrets:
     file: ./pass_mysql_root.txt
   pass_mysql:
     file: ./pass_mysql.txt
-    
+
 services:
   db:
     image: mariadb:10.5
@@ -27,7 +27,7 @@ services:
       - pass_mysql
 
   app:
-    image: nextcloud
+    build: .
     restart: always
     ports:
       - 8080:80
