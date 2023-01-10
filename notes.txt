@@ -4,4 +4,7 @@ https://docs.nextcloud.com/server/15/admin_manual/installation/installation_wiza
 got to config/config.php
 
 under teh ip settings, add 192.x.x.x 
+same goes for website domain. 
+
+
 

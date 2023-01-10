@@ -10,6 +10,14 @@ secrets:
   pass_mysql:
     file: ./pass_mysql.txt
 
+networks:
+  file_server_net:
+    name: file_server_vnet
+    driver: bridge
+  website_net:
+    name: website_vnet
+    driver: bridge
+    
 services:
   db:
     image: mariadb:10.5
@@ -25,6 +33,8 @@ services:
     secrets:
       - pass_mysql_root
       - pass_mysql
+    networks:
+      - file_server_net
 
   app:
     build: .
@@ -42,3 +52,5 @@ services:
       - MYSQL_HOST=db
     secrets:
       - pass_mysql
+    networks:
+      - file_server_net
